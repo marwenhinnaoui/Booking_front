@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { Layout, Menu, Dropdown, Spin } from 'antd'
+import { Layout, Menu, Spin } from 'antd'
 import 'antd/dist/antd.css'
 import '../assets/main.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,11 +10,12 @@ import {
     UnorderedListOutlined,
     UserOutlined,
     DownOutlined, 
+    PoweroffOutlined
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
-import DropDown from './dropdown';
+import Tablee from './table';
 const { Header, Content, Footer } = Layout
-export default function Dashboad(permission) {
+export default function Dashboad() {
     const location = useLocation()
     const [loading, setLoading] = useState(false);
     function spinner(){
@@ -23,14 +24,16 @@ export default function Dashboad(permission) {
     }
     const navigate = useNavigate()
     const api= axios.create({
-        baseURL:'http://127.0.0.1:8000/auth/api',
+        baseURL:'http://127.0.0.1:8000/api',
         headers: {
             "Authorization": `Token ${location.state.token}`
             }
         }
     )
+
+
     const logout=()=>{
-        api.post('/logout/').then(
+        api.post('/auth/logout/').then(
             res=> {
                 setLoading(true)
                 setTimeout(() => {
@@ -43,27 +46,30 @@ export default function Dashboad(permission) {
                 error=>console.log('res \n', error)
                 )
     }
-    const [dropDown, setDrop]=useState({opacity:'opacity_0', toggle:false})
+    const [DropDown, setDrop]=useState(false)
     const handleClick= ()=>{
-        !dropDown.toggle ? setDrop({opacity:'opacity_100', toggle:true}):
-        setDrop({opacity:'opacity_0', toggle:false})
+        (!DropDown)?setDrop(true) : setDrop(false)
     }
-
     return(
         <div>
         <Header className='p-0'>
-        <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']}>
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
             <Menu.Item className='logo'>Booking</Menu.Item>
-            <Menu.Item icon={<HomeOutlined />}><Link to="/">Home</Link></Menu.Item>
             <Menu.Item icon={<UnorderedListOutlined />} ><Link to="/rooms">My Rooms</Link></Menu.Item>
             <Menu.Item className='Account' icon={< UserOutlined/>} onClick={handleClick}>
                 {location.state.username}
             </Menu.Item>
 
         </Menu>
-{spinner()}
         </Header>
-        <DropDown dropDown={dropDown} logout={logout}/>
+        {(DropDown)?
+            <ul className='DropDown justify-content-center m-0 p-0'>
+                <li><Link className='text-white d-flex align-items-center justify-content-center' to="/"><UserOutlined className='me-1'/> Profil</Link> </li>
+                <li><Link className='text-white d-flex align-items-center justify-content-center' to="/"><PoweroffOutlined className='me-1'/> Logout</Link> </li>
+
+            </ul>
+        : <div></div>}
+        <Tablee />
         </div>
     );
 }

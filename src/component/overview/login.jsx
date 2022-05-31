@@ -16,19 +16,19 @@ export default function Login() {
     useEffect(()=>{
         
     }, [])
-    const [loading, setLoading] = useState(false);
+    const [Loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
-    function spinner(){
-        if(loading===true)
-            return <div className="loading"></div>
-    }
+    // function Loading(){
+    //     if(loading===true)
+    //         return <div className="loading"></div>
+    // }
 
     const [email, setEmail]= useState('')
     const [password, setPassowrd]= useState('')
     const [username, setUsername]= useState('')
     const api= axios.create({
-        baseURL:'http://127.0.0.1:8000/auth/api',
+        baseURL:'http://127.0.0.1:8000/api/auth',
         headers: {
             "Content-Type": "application/json"
             }
@@ -40,6 +40,8 @@ export default function Login() {
         e.preventDefault()
         login()
     }
+    let isLogin =false
+    const [User, setUser] = useState([])
     const login =()=>{
 
         let resutl =api.post('/login/',{
@@ -50,18 +52,27 @@ export default function Login() {
         }).then(userResponse =>{
             localStorage.setItem('token', userResponse.data.token)
             console.log(userResponse.data)
-            setLoading(true)
+            User.push(userResponse.data)
+            // console.log('User '+User.length)
+            // console.log('User '+User)
+            if(User.length > 0){
+
+                isLogin = true
+                setLoading(false)
+            }
             setTimeout(() => {
-                navigate("/dashboard", {state:{id: userResponse.data.id, username: userResponse.data.username, email: userResponse.data.email, token: userResponse.data.token}})
+                navigate("/dashboard", {state:{isLogin:isLogin, id: userResponse.data.id, username: userResponse.data.username, email: userResponse.data.email, token: userResponse.data.token}})
             }, 2000);
+            console.log(userResponse.data.token)
 
         }).catch((errorResponse)=>{
             console.log(errorResponse)
         })
     }
     return (
-    <div className='login'>
-        {spinner()}
+    <div className='Content'>
+
+                {(!Loading)? <Spin className='Spin mt-1'/> : <div></div>}
         <section className='container d-flex align-items-center justify-content-center'>
             <img src={Hotelvector} alt="" />
             <form  className='row justify-content-center' >

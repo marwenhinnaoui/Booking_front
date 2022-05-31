@@ -11,6 +11,9 @@
     opacity: 1;
     transition: .3s all;
 }
+.DropDown{
+    z-index: 9999;
+}
 ul.dropDown li{
     cursor: pointer;
     padding: 10px;
@@ -18,11 +21,10 @@ ul.dropDown li{
     width: 200px;
     height: auto;
     color: #1890ff;
+
 }
 ul.dropDown li:hover{
     text-decoration:underline;
-
-
 }
 .dropDown{
     position: absolute;
@@ -59,20 +61,53 @@ ul.dropDown li:hover{
     background: white;
     border-radius: 3px;
     border:none;
-    box-shadow: 0px 8px 15px rgb(75 72 72 / 10%);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+.w-25{
+    width: 50%;
 }
 .input:focus-visible {
     outline: none;
 }
+.DropDown li:hover{
+    background-color: #1890ff;
+}
+.DropDown li{
+    list-style: none;
+    padding: 7px;
+    width: 100%;
+    transition: .3s all;
+}
+.ant-modal-footer{
+    display: flex;
+}
+.DropDown{
+    background: #001529;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #000;
+    right: 0;
+    width: 170px;
+}
+.Spin{
+    position: absolute !important;
+    top: 4px;
+    z-index: 100    ; 
+}
 
+.site-button-ghost-wrapper{
+    padding: 5px !important;
+}
 .container, .login{
-    position: relative;
     height: 91vh;
 }
 .container > img{
     width: 50%;
 }
-.loading{
+/* .loading{
     position: absolute;
     content: '';
     background-color: #1890ff;
@@ -80,7 +115,7 @@ ul.dropDown li:hover{
     top: 0;
     left: 0;
     animation: loading 2s;
-}
+} */
 
 
 @keyframes loading {
@@ -98,4 +133,29 @@ Button{
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
+}
+.Side{
+    background-color: rgb(243, 243, 243);
+    height: calc(100vh - 64px);
+    position: fixed;
+    left: 0;
+}
+.Content{
+    margin-top: 64px;
+}
+.Rooms{
+    position: absolute;
+    right: 0;
+
+}
+.Card{
+    height: 300px;
+}
+
+.Navbar{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+
 }

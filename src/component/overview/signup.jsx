@@ -28,7 +28,7 @@ export default function Signup() {
     const [password, setPassowrd]= useState('')
     const [username, setUsername]= useState('')
     const api= axios.create({
-        baseURL:'http://127.0.0.1:8000/auth/api',
+        baseURL:'http://127.0.0.1:8000/api/auth',
         headers: {
             "Content-Type": "application/json"
             }
