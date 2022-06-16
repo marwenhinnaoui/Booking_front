@@ -14,7 +14,7 @@ export function Navbar(){
     return(
         <div>
         <Header className='p-0 Navbar '>
-            <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+            <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']}>
                 <Menu.Item className='logo'>Booking</Menu.Item>
                 <Menu.Item icon={<HomeOutlined />}><Link to="/">Home</Link></Menu.Item>
                 <Menu.Item icon={<PhoneOutlined />} ><Link to="/contact">Contact</Link></Menu.Item>

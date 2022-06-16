@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Navigate, useNavigate } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/main.css'
@@ -27,6 +27,7 @@ export default function Login() {
     const [email, setEmail]= useState('')
     const [password, setPassowrd]= useState('')
     const [username, setUsername]= useState('')
+
     const api= axios.create({
         baseURL:'http://127.0.0.1:8000/api/auth',
         headers: {
@@ -56,12 +57,10 @@ export default function Login() {
             // console.log('User '+User.length)
             // console.log('User '+User)
             if(User.length > 0){
-
-                isLogin = true
                 setLoading(false)
             }
             setTimeout(() => {
-                navigate("/dashboard", {state:{isLogin:isLogin, id: userResponse.data.id, username: userResponse.data.username, email: userResponse.data.email, token: userResponse.data.token}})
+                navigate("/", {state:{isLogin:isLogin, id: userResponse.data.id, username: userResponse.data.username, email: userResponse.data.email, token: userResponse.data.token}})
             }, 2000);
             console.log(userResponse.data.token)
 

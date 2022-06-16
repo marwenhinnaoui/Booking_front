@@ -11,22 +11,20 @@ import { Navbar } from './component/overview/navbar';
 import Signup from './component/overview/signup';
 import Home from './component/overview/home';
 import Tablee from './component/dashboard/table';
+import { useContext } from 'react';
 
 function App() {
 
   return (
     <div className="App">
       <BrowserRouter>
-      <Routes>
-      
-        <Route path="/" element={<Navbar />} >
-          <Route path='/' element={<Home />} />
-          <Route path="/login" element={<Login className='h-100' />} />
+        <Routes>
+          <Route path="/" element={<Dashboad />} >
+          </Route>
+          <Route path="/rooms" element={<Tablee />} />
+        
+        <Route path="/login" element={<Login className='h-100' />} />
           <Route path="/register" element={<Signup className='h-100' />} />
-        </Route>
-
-        <Route path="/dashboard" element={<Dashboad />} />
-        {/* <Route path="/rooms" element={<Tablee />} /> */}
       </Routes>
     </BrowserRouter>
     </div>

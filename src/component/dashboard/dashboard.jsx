@@ -14,6 +14,7 @@ import {
 } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import Tablee from './table';
+import Home from '../overview/home';
 const { Header, Content, Footer } = Layout
 export default function Dashboad() {
     const location = useLocation()
@@ -53,9 +54,12 @@ export default function Dashboad() {
     return(
         <div>
         <Header className='p-0'>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
+        <Menu theme="light" mode="horizontal" defaultSelectedKeys={['2']}>
             <Menu.Item className='logo'>Booking</Menu.Item>
-            <Menu.Item icon={<UnorderedListOutlined />} ><Link to="/rooms">My Rooms</Link></Menu.Item>
+            <Menu.Item icon={<UnorderedListOutlined />} ><Link to="/" state={location.state}>Home</Link></Menu.Item>
+
+            <Menu.Item icon={<UnorderedListOutlined />} ><Link to="/rooms" state={location.state}>My Rooms</Link></Menu.Item>
+            {/* <Menu.Item icon={<UnorderedListOutlined />} ><Link to="/rooms">Room</Link></Menu.Item> */}
             <Menu.Item className='Account' icon={< UserOutlined/>} onClick={handleClick}>
                 {location.state.username}
             </Menu.Item>
@@ -69,7 +73,7 @@ export default function Dashboad() {
 
             </ul>
         : <div></div>}
-        <Tablee />
+<Home  id={location.state.id}/>
         </div>
     );
 }

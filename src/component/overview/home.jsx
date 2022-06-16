@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, Spin, Card, Avatar, Input, Space, Button } from 'antd'
+import { Menu, Spin, Card, Avatar, Input, Space, Button, Modal } from 'antd'
 import 'antd/dist/antd.css'
 import '../assets/main.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -10,9 +10,10 @@ import {
     SearchOutlined
 } from '@ant-design/icons'
 import Room from './room'
-export default function Home(){
+export default function Home(props){
     const { Meta } = Card
     const { Search } = Input
+    ///////
     const [SearchValue, SetSearch] = useState('')
     function Validate (v, e){
             if(v.indexOf(e)!=-1)
@@ -36,17 +37,32 @@ export default function Home(){
         baseURL:URL,
         }
     )
+
     const [Rooms, setRooms]= useState([])
     useEffect(async ()=>{
         const res= await axios(URL);
         setRooms(res.data)
-        console.log(Rooms.length)
-        console.log(Rooms)
+        // console.log(Rooms.length)
+        // console.log(Rooms)
         if(Rooms.length > 0)
             setLoading(false)
-    }, [Rooms]) 
+    }, [Rooms])
+
+
+
+
+
+    const [RoomPut, setRoomPut] = useState();
+    const [PersonPut, setPersonPut] = useState();
+    const [StartDate, setStartDate] = useState();
+    const [dateEnd, setDateEnd] = useState();
+    const [isModalVisible, setIsModalVisible] = useState();
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
         return(
-        <div className='row me-0 Content'>
+        <div className='row me-0'>
             {(Loading) ? <Spin className='Spin' /> : <div></div>}
         <dir className='col-12 p-3 Rooms'>
         <div className='col-3 mb-3 d-flex justify-content-end w-100'>
@@ -56,17 +72,18 @@ export default function Home(){
 
                 {
                     Rooms.map((item, index)=>{
-                        console.log(Validate(item.hotel.nameHotel,SearchValue))
+                        // console.log(Validate(item.hotel.nameHotel,SearchValue))
                         if(Validate(item.hotel.nameHotel,SearchValue )){
                             return(
                                 <div className='col-3 m-0' key={index.toString()}>
-                                    <Room className="w-100" person={item.person} image={item.image} name={item.hotel.nameHotel} location={item.hotel.location}  description={item.hotel.description} stars={item.hotel.stars} />
+                                    <Room className="w-100" idClient={ location.state.id } id={ item.id }person={item.person} image={item.image} name={item.hotel.nameHotel} location={item.hotel.location}  description={item.hotel.description} stars={item.hotel.stars} />
                                 </div>
                 )}
                     })
                 }
             
         </div>
+
         </dir>
         </div>
 
